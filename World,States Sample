@@ -1,0 +1,36 @@
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+# 1. Load CSVs with correct encoding
+df_countries = pd.read_csv(r"C:\Users\ASUS\OneDrive\Desktop\Datasets\countries dataset.csv", encoding='latin1')
+df_districts = pd.read_csv(r"C:\Users\ASUS\OneDrive\Desktop\Datasets\district in india dataset.csv", encoding='latin1')
+
+# 2. Load World Map (Updated for GeoPandas 1.0+)
+# We use a direct URL to the dataset since gpd.datasets was removed
+world_url = "https://raw.githubusercontent.com/datasets/geo-boundaries-world-110m/master/countries.geojson"
+world = gpd.read_file(world_url)
+
+# 3. Filter for India
+# Note: In this dataset, the column name might be 'name' or 'ADMIN'
+india = world[world['name'] == "India"]
+
+# 4. Plotting
+fig, ax = plt.subplots(1, 2, figsize=(15, 7))
+
+# Subplot 1: Global Countries
+world.plot(ax=ax[0], color='lightgray', edgecolor='white')
+ax[0].scatter(df_countries['Longitude'], df_countries['Latitude'], color='red', s=10)
+ax[0].set_title("Global Countries Dataset")
+
+# Subplot 2: Districts in India
+# If 'india' dataframe is empty, it might be due to naming ('Republic of India')
+if india.empty:
+    india = world[world['name'].str.contains("India", na=False)]
+
+india.plot(ax=ax[1], color='lightblue', edgecolor='black')
+ax[1].scatter(df_districts['Longitude'], df_districts['Latitude'], color='darkblue', s=5)
+ax[1].set_title("India Districts Dataset")
+
+plt.tight_layout()
+plt.show()
