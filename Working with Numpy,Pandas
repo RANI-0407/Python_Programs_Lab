@@ -1,0 +1,21 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1️⃣ Create NumPy array
+data_np = np.array([[10, 20, 30],
+                    [40, 50, 60],
+                    [70, 80, 90]])
+
+# 2️⃣ Convert to Pandas DataFrame
+df = pd.DataFrame(data_np, columns=['A', 'B', 'C'])
+print("Pandas DataFrame:\n", df)
+
+# 3️⃣ Summary statistics
+print("\nSummary statistics:\n", df.describe())
+
+# 4️⃣ Visualization: Bar plot of all columns (per row)
+df.plot(kind='bar',title="Bar Plot of DataFrame Values"
+plt.xlabel("Row Index")
+plt.ylabel("Value")
+plt.show()
