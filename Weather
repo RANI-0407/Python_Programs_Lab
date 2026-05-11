@@ -1,0 +1,48 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Load the dataset
+df = pd.read_csv(r"C:\Users\ASUS\OneDrive\Desktop\Datasets\weather dataset.csv")
+
+# Ensure column names don't have hidden spaces
+print(df.head())
+
+
+print(df.info())
+
+
+# 2. Filter: Find days where temperature is above 35°C
+hot_days = df[df['temperature_c'] > 35]
+
+print("--- Days with Temperature > 35°C ---")
+print(hot_days)
+
+# 3. Handle missing values in humidity using mean replacement
+# This replaces NaN values with the average of the humidity column
+df['humidity_percent'] = df['humidity_percent'].fillna(df['humidity_percent'].mean())
+
+# 4. Visualization: Temperature and Rainfall trends
+# Convert date to datetime objects for a proper time-series plot
+df['date'] = pd.to_datetime(df['date'], dayfirst=True)
+
+plt.figure(figsize=(12, 8))
+
+# Subplot 1: Temperature Trend (Line Plot)
+plt.subplot(2, 1, 1)
+plt.plot(df['date'], df['temperature_c'], marker='o', color='tab:orange', label='Temperature (°C)')
+plt.title('Daily Temperature Trend')
+plt.ylabel('Temperature (°C)')
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.legend()
+
+# Subplot 2: Rainfall Trend (Bar Plot)
+plt.subplot(2, 1, 2)
+plt.bar(df['date'], df['rainfall_mm'], color='tab:blue', label='Rainfall (mm)')
+plt.title('Daily Rainfall Trend')
+plt.xlabel('Date')
+plt.ylabel('Rainfall (mm)')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
