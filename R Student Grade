@@ -1,0 +1,60 @@
+# Create Student Performance Dataset
+student_data <- data.frame(
+  Name = c("Arun", "Bala", "Cathy", "David", "Eva", "Frank"),
+  Marks = c(85, 40, 78, 92, NA, 55),
+  Attendance = c(90, 60, 85, 95, 70, NA),
+  Grade = c("A", "C", "B", "A", "B", "C")
+)
+
+# Display original dataset
+print("Original Dataset:")
+print(student_data)
+
+# Remove rows with missing values
+clean_data <- na.omit(student_data)
+
+# Filter rows where Marks > 50
+filtered_data <- clean_data[clean_data$Marks > 50, ]
+
+# Display cleaned data
+print("Filtered Dataset:")
+print(filtered_data)
+
+# -------------------
+# Scatter Plot
+# -------------------
+plot(filtered_data$Attendance,
+     filtered_data$Marks,
+     main = "Attendance vs Marks",
+     xlab = "Attendance",
+     ylab = "Marks",
+     col = "blue",
+     pch = 19)
+
+# -------------------
+# Bar Plot
+# -------------------
+grade_count <- table(filtered_data$Grade)
+
+barplot(grade_count,
+        main = "Grade Distribution",
+        col = c("red", "green", "blue"),
+        xlab = "Grades",
+        ylab = "Count")
+
+# -------------------
+# Histogram
+# -------------------
+hist(filtered_data$Marks,
+     main = "Marks Distribution",
+     xlab = "Marks",
+     col = "skyblue",
+     border = "black")
+
+# -------------------
+# Box Plot
+# -------------------
+boxplot(filtered_data$Marks,
+        main = "Boxplot of Marks",
+        ylab = "Marks",
+        col = "orange")
