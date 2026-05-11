@@ -1,0 +1,63 @@
+# Import Libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# -------------------------
+# NUMPY BASIC OPERATIONS
+# -------------------------
+
+# Create NumPy Array
+arr = np.array([10, 20, 30, 40, 50])
+
+print("NumPy Array:")
+print(arr)
+
+# Arithmetic Operations
+print("\nAddition:", arr + 5)
+print("Multiplication:", arr * 2)
+
+# Statistical Operations
+print("\nMean:", np.mean(arr))
+print("Maximum:", np.max(arr))
+print("Minimum:", np.min(arr))
+
+# -------------------------
+# PANDAS BASIC OPERATIONS
+# -------------------------
+
+# Create DataFrame
+data = {
+    'Name': ['A', 'B', 'C', 'D'],
+    'Marks': [80, 70, 90, 60]
+}
+
+df = pd.DataFrame(data)
+
+print("\nPandas DataFrame:")
+print(df)
+
+# View Specific Column
+print("\nMarks Column:")
+print(df['Marks'])
+
+# Filter Rows
+print("\nStudents with Marks > 70:")
+print(df[df['Marks'] > 70])
+
+# Summary Statistics
+print("\nSummary Statistics:")
+print(df.describe())
+
+# -------------------------
+# VISUALIZATION
+# -------------------------
+
+# Bar Plot
+plt.bar(df['Name'], df['Marks'], color='skyblue')
+
+plt.title("Student Marks")
+plt.xlabel("Students")
+plt.ylabel("Marks")
+
+plt.show()
