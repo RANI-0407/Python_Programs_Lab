@@ -1,0 +1,70 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load dataset
+df = pd.read_csv(r"C:\Users\ASUS\OneDrive\Desktop\Datasets\household_power_consumption.csv")
+
+# Combine Date + Time into Datetime
+df['Datetime'] = pd.to_datetime(
+    df['Date'] + ' ' + df['Time'],
+    format='%d/%m/%Y %H:%M:%S',
+    errors='coerce'
+)
+
+# Convert power column to numeric
+df['Global_active_power'] = pd.to_numeric(
+    df['Global_active_power'], errors='coerce'
+)
+
+# Keep required columns and remove missing values
+df = df[['Datetime', 'Global_active_power']].dropna()
+
+# Set Datetime as index
+df.set_index('Datetime', inplace=True)
+
+# Daily average
+daily = df.resample('D').mean()
+
+# 7-day Moving Average
+daily['MA7'] = daily['Global_active_power'].rolling(7).mean()
+
+# ---------------------------
+# 1. Daily Trend
+# ---------------------------
+daily['Global_active_power'].plot(
+    figsize=(12,5),
+    title='Daily Energy Consumption'
+)
+plt.ylabel("Power")
+plt.grid()
+plt.show()
+
+# ---------------------------
+# 2. Moving Average Trend
+# ---------------------------
+daily[['Global_active_power', 'MA7']].plot(
+    figsize=(12,5),
+    title='Energy Consumption Trend (7-Day Moving Average)'
+)
+plt.ylabel("Power")
+plt.grid()
+plt.show()
+
+# ---------------------------
+# 3. Monthly Trend
+# FIX: Use 'ME' instead of 'M'
+# ---------------------------
+daily.resample('ME').mean().plot(
+    figsize=(10,5),
+    title='Monthly Average Consumption'
+)
+plt.ylabel("Power")
+plt.grid()
+plt.show()
+
+# ---------------------------
+# Insights
+# ---------------------------
+print("Max:", daily['Global_active_power'].max())
+print("Min:", daily['Global_active_power'].min())
+print("Average:", daily['Global_active_power'].mean())
