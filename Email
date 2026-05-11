@@ -1,0 +1,86 @@
+# -------------------------------
+# 1. Import Libraries
+# -------------------------------
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# -------------------------------
+# 2. Load Email Dataset
+# -------------------------------
+data = pd.read_excel(r"D:\EDA Lab\email_data.xlsx")
+
+# Display first 5 rows
+print("First 5 Rows of Dataset:")
+print(data.head())
+
+# Dataset information
+print("\nDataset Info:")
+print(data.info())
+
+# Summary statistics
+print("\nSummary Statistics:")
+print(data.describe())
+
+# -------------------------------
+# 3. Check Missing Values
+# -------------------------------
+print("\nMissing Values:")
+print(data.isnull().sum())
+
+# -------------------------------
+# 4. Visualization
+# -------------------------------
+
+# Histogram of Email Length
+plt.figure(figsize=(6,4))
+
+plt.hist(data['Email_Length'],
+         bins=5,
+         color='skyblue',
+         edgecolor='black')
+
+plt.title("Distribution of Email Length")
+plt.xlabel("Email Length")
+plt.ylabel("Frequency")
+
+plt.show()
+
+# Boxplot
+plt.figure(figsize=(6,4))
+
+sns.boxplot(data['Email_Length'])
+
+plt.title("Boxplot of Email Length")
+
+plt.show()
+
+# Line Plot
+plt.figure(figsize=(6,4))
+
+plt.plot(data['Email_ID'],
+         data['Email_Length'],
+         marker='o')
+
+plt.title("Email Length by Email ID")
+plt.xlabel("Email ID")
+plt.ylabel("Email Length")
+
+plt.show()
+
+# -------------------------------
+# 5. Meaningful Insights
+# -------------------------------
+
+print("\nMeaningful Insights")
+
+print("Total Emails:", len(data))
+
+print("Average Email Length:",
+      data['Email_Length'].mean())
+
+print("Maximum Email Length:",
+      data['Email_Length'].max())
+
+print("Minimum Email Length:",
+      data['Email_Length'].min())
